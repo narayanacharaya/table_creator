@@ -1,6 +1,6 @@
 import mysql from 'mysql2/promise';
 
-const database = 'mysys';
+const database = 'fullstack_assignment';
 
 // Create a pool object
 const pool = mysql.createPool({

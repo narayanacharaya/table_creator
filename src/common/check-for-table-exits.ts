@@ -1,13 +1,17 @@
+import { QueryResult } from 'mysql2';
 import pool from '../dbconfig';
 
-export const tableExistss = (tableName: string): Promise<boolean> => {
-  return new Promise((resolve, reject) => {
-    pool.query(`SHOW TABLES LIKE '${tableName}'`, (error, results) => {
-      if (error) {
-        reject(error);
-      } else {
-        resolve(results.length > 0);
-      }
-    });
-  });
+export const tableExistss = async (tableName: string): Promise<boolean> => {
+  try {
+    const [results, fields] = await pool.query(
+      `SHOW TABLES LIKE '${tableName}'`
+    );
+
+    console.log(`SHOW TABLES LIKE '${tableName}'`);
+
+    console.log((results as []).length);
+    return (results as []).length > 0;
+  } catch (error) {
+    throw new Error(`Error checking table existence: ${error}`);
+  }
 };
